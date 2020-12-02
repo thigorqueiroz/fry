@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/members")
-public class MemberResource {
-    private static final Logger Logger = LoggerFactory.getLogger(MemberResource.class);
+@RequestMapping("/partners")
+public class PartnerResource {
+    private static final Logger Logger = LoggerFactory.getLogger(PartnerResource.class);
 }

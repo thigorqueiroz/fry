@@ -1,11 +1,3 @@
-CREATE TABLE range_time(
-    id UUID PRIMARY KEY,
-    period_start VARCHAR(10),
-    period_end VARCHAR(10),
-    created_at TIMESTAMP WITH TIME ZONE ,
-    updated_at TIMESTAMP WITH TIME ZONE
-);
-
 CREATE TABLE team(
     id UUID PRIMARY KEY,
     name VARCHAR(255)
@@ -14,13 +6,13 @@ CREATE TABLE team(
 CREATE TABLE campaign(
     id UUID PRIMARY KEY,
     name VARCHAR(255),
-    range_time_id UUID,
+    period_start VARCHAR(10),
+    period_end VARCHAR(10),
     created_at TIMESTAMP WITH TIME ZONE ,
-    updated_at TIMESTAMP WITH TIME ZONE,
-    FOREIGN KEY(range_time_id) REFERENCES range_time(id)
+    updated_at TIMESTAMP WITH TIME ZONE
 );
 
-CREATE TABLE fan_user(
+CREATE TABLE partner(
     id UUID PRIMARY KEY,
     name TEXT,
     email VARCHAR(255),
