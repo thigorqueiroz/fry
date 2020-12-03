@@ -3,13 +3,28 @@ CREATE TABLE team(
     name VARCHAR(255)
 );
 
-CREATE TABLE campaign(
+CREATE TABLE range_time(
     id UUID PRIMARY KEY,
-    name VARCHAR(255),
     period_start VARCHAR(10),
     period_end VARCHAR(10),
     created_at TIMESTAMP WITH TIME ZONE ,
     updated_at TIMESTAMP WITH TIME ZONE
+);
+
+CREATE TABLE campaign(
+    id UUID PRIMARY KEY,
+    name VARCHAR(255),
+    created_at TIMESTAMP WITH TIME ZONE ,
+    updated_at TIMESTAMP WITH TIME ZONE
+);
+
+CREATE TABLE duration(
+    range_time_id UUID,
+    campaign_id UUID,
+    created_at TIMESTAMP WITH TIME ZONE ,
+    updated_at TIMESTAMP WITH TIME ZONE,
+    FOREIGN KEY(range_time_id) REFERENCES range_time(id),
+    FOREIGN KEY(campaign_id) REFERENCES campaign(id)
 );
 
 CREATE TABLE partner(
