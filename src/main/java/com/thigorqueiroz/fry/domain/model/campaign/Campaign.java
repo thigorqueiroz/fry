@@ -2,6 +2,7 @@ package com.thigorqueiroz.fry.domain.model.campaign;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.thigorqueiroz.fry.domain.model.common.AggregateRootWithIdentifierAsUUID;
 import com.thigorqueiroz.fry.domain.model.common.AgregateRoot;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,10 +16,8 @@ import java.util.UUID;
 @Table("campaign")
 @JsonRootName("campaign")
 
-public class Campaign extends AbstractAggregateRoot<Campaign> {
-    @Id
-    @JsonProperty("identifier")
-    UUID id;
+public class Campaign extends AggregateRootWithIdentifierAsUUID<Campaign> {
+
     @JsonProperty("name")
     public String name;
     OffsetDateTime createdAt = OffsetDateTime.now();
