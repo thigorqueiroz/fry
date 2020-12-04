@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.thigorqueiroz.fry.application.service.CampaignService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,17 +24,15 @@ public class CampaignResource {
     @Autowired private CampaignService campaignService;
 
     @GetMapping
-    @RequestMapping("/{id}")
-    public Campaign findById(@PathVariable UUID id) {
-        Logger.debug("find campaign by id");
-        return campaignService.getById(id);
+    public List<Campaign> findAll() {
+        Logger.debug("find all campaigns");
+        return campaignService.findAll();
     }
 
-    @DeleteMapping
-    @RequestMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Campaign> delete(@PathVariable UUID id) {
-         campaignService.delete(id);
-         return new ResponseEntity(HttpStatus.NO_CONTENT);
+        campaignService.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping
@@ -41,8 +40,8 @@ public class CampaignResource {
         return campaignService.create(command);
     }
 
-    @PatchMapping
-    public Campaign partialUpdate(@RequestBody PartialUpdateCampaignCommand command) {
-         return campaignService.partialUpdate(command);
+    @PatchMapping("/{id}")
+    public Campaign partialUpdate(@RequestBody PartialUpdateCampaignCommand command, @PathVariable UUID id) {
+        return campaignService.partialUpdate(command, id);
     }
 }

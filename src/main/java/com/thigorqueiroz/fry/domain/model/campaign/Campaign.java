@@ -2,20 +2,23 @@ package com.thigorqueiroz.fry.domain.model.campaign;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.thigorqueiroz.fry.domain.model.common.AgregateRoot;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Version;
+import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Table("campaign")
 @JsonRootName("campaign")
-public class Campaign {
+
+public class Campaign extends AbstractAggregateRoot<Campaign> {
     @Id
     @JsonProperty("identifier")
-    UUID id = UUID.randomUUID();
+    UUID id;
     @JsonProperty("name")
     public String name;
     OffsetDateTime createdAt = OffsetDateTime.now();
@@ -27,15 +30,20 @@ public class Campaign {
     }
 
     public Campaign(Campaign that, String name) {
-        //TODO: improve it to be immutable. Some like cloneable
-        this(that.id, name,that.createdAt,that.updatedAt);
+        this(that.id, name);
     }
 
-    public Campaign(UUID id, String name, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public Campaign(UUID id, String name){
         this.id = id;
         this.name = name;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    }
+
+    public Campaign(String name) {
+        this.name = name;
+    }
+
+    public void setId() {
+        this.id = UUID.randomUUID();
     }
 
     @Override
@@ -44,7 +52,6 @@ public class Campaign {
         if (!(o instanceof Campaign)) return false;
 
         Campaign campaign = (Campaign) o;
-
         if (id != null ? !id.equals(campaign.id) : campaign.id != null) return false;
         if (name != null ? !name.equals(campaign.name) : campaign.name != null) return false;
         if (createdAt != null ? !createdAt.equals(campaign.createdAt) : campaign.createdAt != null) return false;
