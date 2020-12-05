@@ -25,7 +25,7 @@ public class CampaignResource {
 
     @GetMapping
     public List<Campaign> findAll() {
-        Logger.debug("find all campaigns");
+        Logger.info("find all campaigns");
         return campaignService.findAll();
     }
 

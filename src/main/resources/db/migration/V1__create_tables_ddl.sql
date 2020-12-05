@@ -12,9 +12,17 @@ CREATE TABLE campaign(
     created_at TIMESTAMP WITH TIME ZONE ,
     updated_at TIMESTAMP WITH TIME ZONE
 );
--- I prefer to denormalize it
+
 CREATE TABLE duration(
     range_time_id UUID,
+    campaign_id UUID,
+    created_at TIMESTAMP WITH TIME ZONE ,
+    updated_at TIMESTAMP WITH TIME ZONE
+);
+
+CREATE TABLE subscription_campaign(
+    id UUID PRIMARY KEY,
+    team_id UUID,
     campaign_id UUID,
     created_at TIMESTAMP WITH TIME ZONE ,
     updated_at TIMESTAMP WITH TIME ZONE

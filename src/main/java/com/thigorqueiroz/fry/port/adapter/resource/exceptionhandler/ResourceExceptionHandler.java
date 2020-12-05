@@ -1,5 +1,6 @@
 package com.thigorqueiroz.fry.port.adapter.resource.exceptionhandler;
 
+import com.thigorqueiroz.fry.domain.model.common.BusinessException;
 import com.thigorqueiroz.fry.domain.model.common.EntityNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,9 +12,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
-
+    //TODO: REVIEW ALL HTTP STATUS, MAYBE I SHOULD CREATE A MECANISM TO HANDLE GENERIC AND SPECIFIC EXCEPTIONS
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handleEntityNotFoundException(EntityNotFoundException ex, WebRequest request) {
-        return handleExceptionInternal(ex, ex.getMessage(), HttpHeaders.EMPTY, HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, ResponseEntity.badRequest().body(ex.getMessage()), HttpHeaders.EMPTY, HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<?> handleEntityNotFoundException(BusinessException ex, WebRequest request) {
+        return handleExceptionInternal(ex, ResponseEntity.badRequest().body(ex.getMessage()), HttpHeaders.EMPTY, HttpStatus.BAD_REQUEST, request);
     }
 }
