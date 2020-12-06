@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import static com.thigorqueiroz.fry.port.adapter.config.AmqpConfig.PARTNER_CREATED_QUEUE;
-
 @Component
 public class PartnerSubscribedListener {
 
@@ -23,12 +21,12 @@ public class PartnerSubscribedListener {
 
     private static final Logger log = LoggerFactory.getLogger(PartnerSubscribedListener.class);
 
-    @RabbitListener(id = "partnerSubscribedListener", queues = {PARTNER_CREATED_QUEUE})
+    @RabbitListener(id = "partnerSubscribedListener", queues = {"partner_api.partner_created"})
     public void onPartnerCreated(String message ) {
         log.info("Received a new message on partnerSubscribedListener '{}'", message);
         try {
             var partnerCreatedMessage = objectMapper.readValue(message, PartnerCreatedMessage.class);
-            campaignService.sendAllRelatedWithTeam(partnerCreatedMessage.toSendAllCampaignsByTeamCommand());
+            campaignService.publishAllAssociatedWithTeam(partnerCreatedMessage.toSendAllCampaignsByTeamCommand());
         } catch (JsonProcessingException e) {
             log.error("Error during deserialize message '{}', ex: '{}'", message, e);
         }

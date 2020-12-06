@@ -17,7 +17,6 @@ import org.springframework.util.StringUtils;
 @Component
 public class RabbitMQEventDispatcher {
 
-
         private final ObjectMapper objectMapper;
         private final RabbitTemplate rabbitTemplate;
 
@@ -36,9 +35,10 @@ public class RabbitMQEventDispatcher {
         var routingKey = RoutingKeys.routingKeys().get(event.getClass());
         if (!StringUtils.hasLength(routingKey)) {
             log.error("there isn't routing key to publish event");
+            return;
         }
         try {
-            var eventAsString = objectMapper.writeValueAsString(new RabbitEvent(event));
+            var eventAsString = objectMapper.writeValueAsString(event);
             rabbitTemplate.convertAndSend(routingKey, eventAsString);
             log.info("Dispatching event to RabbitMQ: routingKey='{}', rabbitEvent='{}'", routingKey, eventAsString);
         } catch (JsonProcessingException e) {

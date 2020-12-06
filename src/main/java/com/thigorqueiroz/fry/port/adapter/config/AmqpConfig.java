@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Configuration;
 public class AmqpConfig {
 
     //TODO: put it in a right place
-    public static final String PARTNER_CREATED_QUEUE = "partner_api.partner_created";
-    private static final String PARTNER_CREATED_ROUTING_KEY = "resource.partner.created";
+    public static final String CAMPAIGNS_FOUND_QUEUE = "fry.campaign.found";
+    private static final String CAMPAIGNS_FOUND_ROUTING_KEY = "resource.campaign.found";
 
     @Bean
     public TopicExchange defaultExchange(@Value("${spring.rabbitmq.template.exchange}") String defaultTopic) {
@@ -25,7 +25,7 @@ public class AmqpConfig {
     @Bean
     public InitializingBean startConfig(AmqpAdmin amqpAdmin, TopicExchange defaultTopic) {
         //TODO: externalize queues in a static class/enum
-        return () -> setupQueue(amqpAdmin, defaultTopic, PARTNER_CREATED_QUEUE, PARTNER_CREATED_ROUTING_KEY);
+        return () -> setupQueue(amqpAdmin, defaultTopic, CAMPAIGNS_FOUND_QUEUE, CAMPAIGNS_FOUND_ROUTING_KEY);
     }
 
     private void setupQueue(AmqpAdmin amqpAdmin, TopicExchange exchange, String queueName, String routingKey) {

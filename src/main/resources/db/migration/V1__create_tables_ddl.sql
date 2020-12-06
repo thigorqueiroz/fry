@@ -25,5 +25,6 @@ CREATE TABLE team_campaign(
     team_id UUID,
     campaign_id UUID,
     created_at TIMESTAMP WITH TIME ZONE ,
-    updated_at TIMESTAMP WITH TIME ZONE
+    updated_at TIMESTAMP WITH TIME ZONE,
+    FOREIGN KEY(campaign_id) REFERENCES campaign(id)
 );

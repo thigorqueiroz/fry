@@ -1,12 +1,13 @@
 package com.thigorqueiroz.fry.application.service;
 
 import com.thigorqueiroz.fry.application.command.CreateCampaignCommand;
-import com.thigorqueiroz.fry.application.command.SendAllCampaignsByTeamCommand;
 import com.thigorqueiroz.fry.application.command.PartialUpdateCampaignCommand;
+import com.thigorqueiroz.fry.application.command.SendAllCampaignsByTeamCommand;
 import com.thigorqueiroz.fry.domain.model.campaign.Campaign;
 import com.thigorqueiroz.fry.domain.model.campaign.CampaignRepository;
+import com.thigorqueiroz.fry.domain.model.campaign.SearchCampaignsTerminatedEvent;
+import com.thigorqueiroz.fry.domain.model.common.AggregateRootWithIdentifierAsUUID;
 import com.thigorqueiroz.fry.domain.model.common.BusinessException;
-import com.thigorqueiroz.fry.domain.model.common.DomainEvent;
 import com.thigorqueiroz.fry.domain.model.common.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CampaignService {
@@ -40,7 +41,7 @@ public class CampaignService {
     public void delete(UUID id) {
         //TODO: unhappy path
         campaignRepository.findById(id)
-                .ifPresent(f -> campaignRepository.delete(f));
+                .ifPresent(campaignRepository::delete);
     }
 
     @Transactional
@@ -70,10 +71,16 @@ public class CampaignService {
     }
 
     @Transactional(readOnly = true)
-    public void sendAllRelatedWithTeam(SendAllCampaignsByTeamCommand command) {
-      //final var campaigns = Collections.unmodifiableList(campaignRepository.findAllRelatedWithTeam(command.teamId));
-        eventPublisher.publishEvent(new DomainEvent() {
-            String teste = "Hello my friend";
-        });
+    public void publishAllAssociatedWithTeam(SendAllCampaignsByTeamCommand command) {
+        List<UUID> campaigns = campaignRepository.findAllRelatedWithTeam(command.teamId)
+                .stream()
+                .map(AggregateRootWithIdentifierAsUUID::getId)
+                .collect(Collectors.toList());
+        eventPublisher.publishEvent(new SearchCampaignsTerminatedEvent(campaigns));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Campaign> findAllRelatedWithTeam(UUID teamId) {
+        return campaignRepository.findAllRelatedWithTeam(teamId);
     }
 }

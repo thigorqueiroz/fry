@@ -8,41 +8,33 @@ import java.util.UUID;
 
 
 public class PartnerCreatedMessage implements Serializable {
-    @JsonProperty("event")
-    public PartnerCreatedEvent event;
-    @JsonProperty("app")
-    public String app;
-    @JsonProperty("event_id")
-    public UUID eventId;
+    @JsonProperty
+    public  String app;
+    @JsonProperty
+    public  UUID team;
+    @JsonProperty
+    public  UUID id;
 
-    public PartnerCreatedMessage(PartnerCreatedEvent event, String app, UUID eventId) {
-        this.event = event;
+    public PartnerCreatedMessage(){
+        super();
+    }
+
+    public PartnerCreatedMessage(UUID team, String app, UUID id) {
+        this.team = team;
         this.app = app;
-        this.eventId = eventId;
-    }
-
-    public PartnerCreatedEvent getEvent() {
-        return event;
-    }
-
-    public void setEvent(PartnerCreatedEvent event) {
-        this.event = event;
+        this.id = id;
     }
 
     public String getApp() {
         return app;
     }
 
-    public void setApp(String app) {
-        this.app = app;
+    public UUID getTeam() {
+        return team;
     }
 
     public UUID getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(UUID eventId) {
-        this.eventId = eventId;
+        return id;
     }
 
     public SendAllCampaignsByTeamCommand toSendAllCampaignsByTeamCommand() {

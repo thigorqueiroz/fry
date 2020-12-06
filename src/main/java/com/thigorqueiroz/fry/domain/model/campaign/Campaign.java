@@ -1,5 +1,6 @@
 package com.thigorqueiroz.fry.domain.model.campaign;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.thigorqueiroz.fry.domain.model.common.AggregateRootWithIdentifierAsUUID;
@@ -11,13 +12,14 @@ import java.util.UUID;
 
 @Table("campaign")
 @JsonRootName("campaign")
-
 public class Campaign extends AggregateRootWithIdentifierAsUUID<Campaign> {
 
     @JsonProperty("name")
     public String name;
+    @JsonIgnore
     OffsetDateTime createdAt = OffsetDateTime.now();
     @LastModifiedDate
+    @JsonIgnore
     OffsetDateTime updatedAt = OffsetDateTime.now();
 
     public Campaign() {
@@ -28,7 +30,7 @@ public class Campaign extends AggregateRootWithIdentifierAsUUID<Campaign> {
         this(that.id, name);
     }
 
-    public Campaign(UUID id, String name){
+    public Campaign(UUID id, String name) {
         this.id = id;
         this.name = name;
     }

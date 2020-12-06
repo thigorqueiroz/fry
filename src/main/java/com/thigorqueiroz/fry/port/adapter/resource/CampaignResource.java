@@ -29,6 +29,13 @@ public class CampaignResource {
         return campaignService.findAll();
     }
 
+    @GetMapping("/{teamId}")
+    public List<Campaign> findAll(@PathVariable UUID teamId) {
+        Logger.info("find all campaigns");
+        return campaignService.findAllRelatedWithTeam(teamId);
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Campaign> delete(@PathVariable UUID id) {
         campaignService.delete(id);
