@@ -3,11 +3,7 @@ package com.thigorqueiroz.fry.domain.model.campaign;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.thigorqueiroz.fry.domain.model.common.AggregateRootWithIdentifierAsUUID;
-import com.thigorqueiroz.fry.domain.model.common.AgregateRoot;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Version;
-import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.OffsetDateTime;

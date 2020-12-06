@@ -20,7 +20,7 @@ CREATE TABLE duration(
     updated_at TIMESTAMP WITH TIME ZONE
 );
 
-CREATE TABLE subscription_campaign(
+CREATE TABLE team_campaign(
     id UUID PRIMARY KEY,
     team_id UUID,
     campaign_id UUID,
