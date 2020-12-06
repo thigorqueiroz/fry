@@ -38,6 +38,6 @@ public class PartnerCreatedMessage implements Serializable {
     }
 
     public SendAllCampaignsByTeamCommand toSendAllCampaignsByTeamCommand() {
-        return new SendAllCampaignsByTeamCommand(null);
+        return new SendAllCampaignsByTeamCommand(team);
     }
 }

@@ -9,19 +9,19 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PartnerSubscribedListener {
+public class PartnerCreatedListener {
 
     private final CampaignService campaignService;
     private final ObjectMapper objectMapper;
 
-    public PartnerSubscribedListener(CampaignService campaignService, ObjectMapper objectMapper) {
+    public PartnerCreatedListener(CampaignService campaignService, ObjectMapper objectMapper) {
         this.campaignService = campaignService;
         this.objectMapper = objectMapper;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(PartnerSubscribedListener.class);
+    private static final Logger log = LoggerFactory.getLogger(PartnerCreatedListener.class);
 
-    @RabbitListener(id = "partnerSubscribedListener", queues = {"partner_api.partner_created"})
+    @RabbitListener(id = "partnerCreatedListener", queues = {"partner_api.partner_created"})
     public void onPartnerCreated(String message ) {
         log.info("Received a new message on partnerSubscribedListener '{}'", message);
         try {

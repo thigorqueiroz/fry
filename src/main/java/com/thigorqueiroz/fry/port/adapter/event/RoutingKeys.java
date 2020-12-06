@@ -8,7 +8,7 @@ import java.util.Map;
 public class RoutingKeys {
    private static Map<Object, String> routingKeys = new HashMap<>();
     public static Map<Object, String> routingKeys () {
-        routingKeys.put(SearchCampaignsTerminatedEvent.class, "resource.campaign.searched");
+        routingKeys.put(SearchCampaignsTerminatedEvent.class, "resource.campaign.found");
         return routingKeys;
     }
 }
