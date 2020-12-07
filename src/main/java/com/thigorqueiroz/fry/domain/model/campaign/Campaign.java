@@ -4,10 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.thigorqueiroz.fry.domain.model.common.AggregateRootWithIdentifierAsUUID;
+import com.thigorqueiroz.fry.domain.model.duration.Duration;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.OffsetDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Table("campaign")
@@ -15,15 +20,17 @@ import java.util.UUID;
 public class Campaign extends AggregateRootWithIdentifierAsUUID<Campaign> {
 
     @JsonProperty("name")
-    public String name;
+    String name;
     @JsonIgnore
     OffsetDateTime createdAt = OffsetDateTime.now();
     @LastModifiedDate
     @JsonIgnore
     OffsetDateTime updatedAt = OffsetDateTime.now();
 
+    @Column("duration_id")
+    UUID durationId;
+
     public Campaign() {
-        super();
     }
 
     public Campaign(Campaign that, String name) {
@@ -35,12 +42,15 @@ public class Campaign extends AggregateRootWithIdentifierAsUUID<Campaign> {
         this.name = name;
     }
 
-    public Campaign(String name) {
+    public Campaign(String name, UUID durationId) {
         this.name = name;
+        this.durationId = durationId;
+
     }
 
-    public void setId() {
-        this.id = UUID.randomUUID();
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -64,4 +74,8 @@ public class Campaign extends AggregateRootWithIdentifierAsUUID<Campaign> {
         return result;
     }
 
+    public Campaign addDuration(Duration durationSaved) {
+        this.id = durationId;
+        return this;
+    }
 }

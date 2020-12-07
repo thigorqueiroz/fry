@@ -19,4 +19,12 @@ public interface CampaignRepository extends CrudRepository<Campaign, UUID> {
             "WHERE tc.team_id = :teamId")
     List<Campaign> findAllRelatedWithTeam(@Param("teamId") UUID teamId);
 
+    @Query(value = "SELECT c " +
+            "FROM Campaign c " +
+            "JOIN Duration d ON c.duration_id = d.id " +
+            "WHERE d.period_end >= now()")
+    List<Campaign> findAllWithDuration();
+
+    //select c.name, d.period_end from campaign c inner join duration d on c.duration_id = d.id where d.period_end >= now()
+
 }

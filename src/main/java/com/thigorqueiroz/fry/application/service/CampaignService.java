@@ -9,6 +9,8 @@ import com.thigorqueiroz.fry.domain.model.campaign.SearchCampaignsTerminatedEven
 import com.thigorqueiroz.fry.domain.model.common.AggregateRootWithIdentifierAsUUID;
 import com.thigorqueiroz.fry.domain.model.common.BusinessException;
 import com.thigorqueiroz.fry.domain.model.common.EntityNotFoundException;
+import com.thigorqueiroz.fry.domain.model.duration.Duration;
+import com.thigorqueiroz.fry.domain.model.duration.DurationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -26,9 +28,13 @@ public class CampaignService {
 
     private final ApplicationEventPublisher eventPublisher;
     private final CampaignRepository campaignRepository;
+    private final DurationRepository durationRepository;
 
-    public CampaignService(CampaignRepository campaignRepository, ApplicationEventPublisher eventPublisher) {
+    public CampaignService(CampaignRepository campaignRepository,
+                           DurationRepository durationRepository,
+                           ApplicationEventPublisher eventPublisher) {
         this.campaignRepository = campaignRepository;
+        this.durationRepository = durationRepository;
         this.eventPublisher = eventPublisher;
     }
 
@@ -58,7 +64,9 @@ public class CampaignService {
                 .ifPresent(f -> {
                     throw new BusinessException("Campaign is already created!");
                 });
-        var campaign = new Campaign(command.name);
+
+        var durationSaved = this.durationRepository.save(new Duration(command.toDate(command.periodStart), command.toDate(command.periodEnd)));
+        var campaign = new Campaign(command.name, durationSaved.getId());
         return this.campaignRepository.save(campaign);
     }
 
@@ -80,7 +88,11 @@ public class CampaignService {
     }
 
     @Transactional(readOnly = true)
-    public List<Campaign> findAllRelatedWithTeam(UUID teamId) {
+    public List<Campaign> findAlldByTeam(UUID teamId) {
         return campaignRepository.findAllRelatedWithTeam(teamId);
+    }
+
+    public List<Campaign> findAllWithDuration() {
+        return campaignRepository.findAllWithDuration();
     }
 }
