@@ -47,6 +47,7 @@ public class CampaignResource {
         return campaignService.create(command);
     }
 
+
     @PatchMapping("/{id}")
     public Campaign partialUpdate(@RequestBody PartialUpdateCampaignCommand command, @PathVariable UUID id) {
         return campaignService.partialUpdate(command, id);
