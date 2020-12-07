@@ -4,6 +4,13 @@ package com.thigorqueiroz.fry.port.adapter.resource;
 import com.thigorqueiroz.fry.application.command.CreateCampaignCommand;
 import com.thigorqueiroz.fry.application.command.PartialUpdateCampaignCommand;
 import com.thigorqueiroz.fry.domain.model.campaign.Campaign;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,22 +26,32 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/campaigns")
+@Tag(name = "campaigns", description = "Campaign API")
 public class CampaignResource {
     private static final Logger Logger = LoggerFactory.getLogger(CampaignResource.class);
-    @Autowired private CampaignService campaignService;
+    @Autowired
+    private CampaignService campaignService;
 
     @GetMapping
     public List<Campaign> findAll() {
         Logger.info("find all campaigns");
-        return campaignService.findAll();
+        return campaignService.findAllWithDuration();
     }
 
     @GetMapping("/{teamId}")
+    @Operation(summary = "Find all campaigns by team id",
+            description = "Find all campaigns by team id", tags = {"campaigns"}
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "successful operation",
+                    content = @Content(
+                            array = @ArraySchema(
+                                    schema = @Schema(implementation = Campaign.class))))})
     public List<Campaign> findAll(@PathVariable UUID teamId) {
         Logger.info("find all campaigns");
-        return campaignService.findAllRelatedWithTeam(teamId);
+        return campaignService.findAlldByTeam(teamId);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Campaign> delete(@PathVariable UUID id) {
