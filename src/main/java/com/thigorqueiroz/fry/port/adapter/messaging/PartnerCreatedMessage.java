@@ -14,15 +14,18 @@ public class PartnerCreatedMessage implements Serializable {
     public  UUID team;
     @JsonProperty
     public  UUID id;
+    @JsonProperty
+    public  String partner;
 
     public PartnerCreatedMessage(){
         super();
     }
 
-    public PartnerCreatedMessage(UUID team, String app, UUID id) {
+    public PartnerCreatedMessage(UUID team, String app, UUID id, String partner) {
         this.team = team;
         this.app = app;
         this.id = id;
+        this.partner = partner;
     }
 
     public String getApp() {
@@ -33,11 +36,15 @@ public class PartnerCreatedMessage implements Serializable {
         return team;
     }
 
+    public String getPartner() {
+        return partner;
+    }
+
     public UUID getEventId() {
         return id;
     }
 
     public SendAllCampaignsByTeamCommand toSendAllCampaignsByTeamCommand() {
-        return new SendAllCampaignsByTeamCommand(team);
+        return new SendAllCampaignsByTeamCommand(team, partner);
     }
 }

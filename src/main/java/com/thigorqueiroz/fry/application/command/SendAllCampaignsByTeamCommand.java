@@ -4,8 +4,10 @@ import java.util.UUID;
 
 public class SendAllCampaignsByTeamCommand {
     public UUID teamId;
+    public String partner;
 
-    public SendAllCampaignsByTeamCommand(UUID teamId) {
+    public SendAllCampaignsByTeamCommand(UUID teamId, String partner) {
         this.teamId = teamId;
+        this.partner = partner;
     }
 }

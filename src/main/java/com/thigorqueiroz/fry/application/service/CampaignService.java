@@ -76,7 +76,7 @@ public class CampaignService {
                 .stream()
                 .map(AggregateRootWithIdentifierAsUUID::getId)
                 .collect(Collectors.toList());
-        eventPublisher.publishEvent(new SearchCampaignsTerminatedEvent(campaigns));
+        eventPublisher.publishEvent(new SearchCampaignsTerminatedEvent(command.teamId, campaigns, command.partner));
     }
 
     @Transactional(readOnly = true)
