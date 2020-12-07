@@ -1,12 +1,9 @@
 package com.thigorqueiroz.fry.application.command;
 
 import javax.validation.constraints.NotNull;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class CreateCampaignCommand {

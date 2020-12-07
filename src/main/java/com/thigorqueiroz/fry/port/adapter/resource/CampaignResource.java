@@ -35,7 +35,7 @@ public class CampaignResource {
     @GetMapping
     public List<Campaign> findAll() {
         Logger.info("find all campaigns");
-        return campaignService.findAllWithDuration();
+        return campaignService.findAll();
     }
 
     @GetMapping("/{teamId}")

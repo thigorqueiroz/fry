@@ -17,9 +17,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,10 +70,7 @@ public class CampaignService {
 
     @Transactional(readOnly = true)
     public List<Campaign> findAll() {
-        //TODO: paginated
-        List<Campaign> campaigns = new ArrayList<>();
-        campaignRepository.findAll().forEach(campaigns::add);
-        return campaigns;
+        return campaignRepository.findAll(new Date());
     }
 
     @Transactional(readOnly = true)
@@ -90,9 +85,5 @@ public class CampaignService {
     @Transactional(readOnly = true)
     public List<Campaign> findAlldByTeam(UUID teamId) {
         return campaignRepository.findAllRelatedWithTeam(teamId);
-    }
-
-    public List<Campaign> findAllWithDuration() {
-        return campaignRepository.findAllWithDuration();
     }
 }
