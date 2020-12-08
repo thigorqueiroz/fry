@@ -14,7 +14,7 @@ Fry is a backend microservice to manage our campaigns.
 In my **challenge** journey, I think that could be a good name to be here.
 
 ## Table of contents
--[Architecture]
+- [Architecture](#Architecture)
 - [Prerequisites](#Prerequisites)
   - [Environment](#Environment)
   - [Ide](#Ide)
@@ -53,13 +53,9 @@ The model architecture for this project is based on Hexagonal (Port and Adapters
 
 git clone https://github.com/thigorqueiroz/fry.git
 
-# To run your app and tests locally you must start the containers using docker-compose
-##Script
+# To run your app and tests locally you must start the containers using docker-compose 
+:> cd docker && docker-compose up -d
 
-```shell script
-cd docker
-docker-compose up -d
-```
 
 # open in IntelliJ IDEA
 
