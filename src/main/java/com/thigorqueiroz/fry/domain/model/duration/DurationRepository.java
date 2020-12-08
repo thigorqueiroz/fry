@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,5 +16,5 @@ public interface DurationRepository extends CrudRepository<Duration, UUID> {
             "JOIN Campaign c ON c.duration_id = d.id " +
             "WHERE d.period_end >= :date"
     )
-    List<Duration> findAllByDate(@Param("date") Date date);
+    List<Duration> findAllByDate(@Param("date") LocalDate date);
 }

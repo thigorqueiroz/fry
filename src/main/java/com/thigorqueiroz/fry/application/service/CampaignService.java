@@ -17,6 +17,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -62,30 +63,25 @@ public class CampaignService {
                 .ifPresent(f -> {
                     throw new BusinessException("Campaign is already created!");
                 });
-        durationRepository.findAllByDate(command.toDate(command.periodEnd))
-                .stream()
-                .filter(duration -> duration.isPeriodEndEqual(command.toDate(command.periodEnd)))
-                .map(duration -> {
-                    duration.plusDayInPeriodEnd(2L);
-                    log.info("plus two days in '{}'", duration.getId());
-                    return duration;
-                })
-                .filter(duration -> duration.isDurationEqual(command.toDate(command.periodStart), command.toDate(command.periodEnd)))
-                .map(duration -> {
-                    duration.plusDayInPeriodEnd(1L);
-                    log.info("plus one day in '{}'", duration.getId());
-                    return duration;
-                });
+        List<Duration> durations = durationRepository.findAllByDate(command.getPeriodEnd());
+        List<Duration> durationsPeriodEndEqual = durations.stream()
+                .filter(duration -> duration.isPeriodEndEqual(command.getPeriodEnd()))
+                .collect(Collectors.toList());
+        List<Duration> durationsEqual = durations.stream()
+                .filter(duration ->
+                        duration.isDurationEqual(command.getPeriodStart(), command.getPeriodEnd()))
+                .collect(Collectors.toList());
 
-
-        var durationSaved = this.durationRepository.save(new Duration(command.toDate(command.periodStart), command.toDate(command.periodEnd)));
+        durationsPeriodEndEqual.stream().map(duration -> duration.plusDayInPeriodEnd(1L)).forEach(durationRepository::save);
+        durationsEqual.stream().map(duration -> duration.plusDayInPeriodEnd(2L)).forEach(durationRepository::save);
+        var durationSaved = this.durationRepository.save(new Duration(command.getPeriodStart(), command.getPeriodEnd()));
         var campaign = new Campaign(command.name, durationSaved.getId());
         return this.campaignRepository.save(campaign);
     }
 
     @Transactional(readOnly = true)
     public List<Campaign> findAll() {
-        return campaignRepository.findAll(new Date());
+        return campaignRepository.findAll(LocalDate.now());
     }
 
     @Transactional(readOnly = true)
