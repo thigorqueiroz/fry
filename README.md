@@ -14,6 +14,7 @@ Fry is a backend microservice to manage our campaigns.
 In my **challenge** journey, I think that could be a good name to be here.
 
 ## Table of contents
+-[Architecture]
 - [Prerequisites](#Prerequisites)
   - [Environment](#Environment)
   - [Ide](#Ide)
@@ -21,6 +22,18 @@ In my **challenge** journey, I think that could be a good name to be here.
 - [Testing](#Testing)
   - [Running](#Running)
 - [Built with](#Built-with)
+
+## Architecture
+The model architecture for this project is based on Hexagonal (Port and Adapters)
+
+![hexagonal](https://paulovich.net/img/hexagonal-1.png)
+
+### Strategic Design Patterns
+* Value Object
+* Entity
+* Aggregate (Root)
+* Repository
+* Domain Event
 
 ## Prerequisites
 
@@ -40,7 +53,13 @@ In my **challenge** journey, I think that could be a good name to be here.
 
 git clone https://github.com/thigorqueiroz/fry.git
 
-# start dependencies with docker-compose `cd docker && docker-compose up -d` 
+# To run your app and tests locally you must start the containers using docker-compose
+##Script
+
+```shell script
+cd docker
+docker-compose up -d
+```
 
 # open in IntelliJ IDEA
 
@@ -61,6 +80,14 @@ Into your IntelliJ IDEA, to run the project, you should optimally set a Configur
 `SPRING_PROFILES_ACTIVE=local`
 
 ### Environment
+
+#### local start 
+    # default is 8080
+    export SPRING_SERVER_PORT=8081 
+	gradle bootRun
+  
+#### /health
+	http localhost:8080/actuator/health
 
 ### Database
 
