@@ -1,6 +1,3 @@
-# fry
-Fry is a backend microservice to manage our campaigns.
-=======
 <p align="center">
   <img src="https://media1.tenor.com/images/28f49f4fcfbe4631ec685cccb88d3a99/tenor.gif?itemid=4691459" height="350" />
 </p>
