@@ -1,7 +1,12 @@
 version: '2.1'
 
 services:
-  postgresql:
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  postgresql-fry:
     image: postgres:12.3-alpine
     environment:
       - POSTGRES_PASSWORD=root
@@ -10,7 +15,7 @@ services:
     ports:
       - 5432:5432
 
-  postgresql-test:
+  postgresql-fry-test:
     image: postgres:12.3-alpine
     environment:
       - POSTGRES_PASSWORD=root

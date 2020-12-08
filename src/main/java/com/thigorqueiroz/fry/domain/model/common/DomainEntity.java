@@ -1,3 +1,5 @@
 package com.thigorqueiroz.fry.domain.model.common;
 
-public interface DomainEntity extends DomainValidation{}
+import java.io.Serializable;
+
+public interface DomainEntity extends Serializable {}

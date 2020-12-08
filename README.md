@@ -1,3 +1,6 @@
+# fry
+Fry is a backend microservice to manage our campaigns.
+=======
 <p align="center">
   <img src="https://media1.tenor.com/images/28f49f4fcfbe4631ec685cccb88d3a99/tenor.gif?itemid=4691459" height="350" />
 </p>
@@ -100,5 +103,5 @@ Into your IntelliJ IDEA, to run the project, you should optimally set a Configur
 [**JUnit**](https://junit.org/) - JUnit 5 is the next generation of JUnit. The goal is to create an up-to-date foundation for developer-side testing on the JVM.
 
 ## Working With RabbitMq
-
 Since this project use RabbitMq, as you start all dependency containers via Docker Compose, you can access [RabbitMq Management](http://localhost:15672) for a RabbitMQ Management UI.
+
