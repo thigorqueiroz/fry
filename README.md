@@ -93,7 +93,7 @@ Into your IntelliJ IDEA, to run the project, you should optimally set a Configur
 
 ## Built With
 
-[**Kotlin**](https://kotlinlang.org/docs/reference/server-overview.html) - Kotlin is a great fit for developing server-side applications, allowing you to write concise and expressive code while maintaining full compatibility with existing Java-based technology stacks and a smooth learning curve:
+[**Java**] - Java is a great fit for developing server-side applications.
 
 [**Spring boot**](https://spring.io/projects/spring-boot) - Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run".
 
