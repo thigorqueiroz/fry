@@ -62,6 +62,21 @@ public class CampaignService {
                 .ifPresent(f -> {
                     throw new BusinessException("Campaign is already created!");
                 });
+        durationRepository.findAllByDate(command.toDate(command.periodEnd))
+                .stream()
+                .filter(duration -> duration.isPeriodEndEqual(command.toDate(command.periodEnd)))
+                .map(duration -> {
+                    duration.plusDayInPeriodEnd(2L);
+                    log.info("plus two days in '{}'", duration.getId());
+                    return duration;
+                })
+                .filter(duration -> duration.isDurationEqual(command.toDate(command.periodStart), command.toDate(command.periodEnd)))
+                .map(duration -> {
+                    duration.plusDayInPeriodEnd(1L);
+                    log.info("plus one day in '{}'", duration.getId());
+                    return duration;
+                });
+
 
         var durationSaved = this.durationRepository.save(new Duration(command.toDate(command.periodStart), command.toDate(command.periodEnd)));
         var campaign = new Campaign(command.name, durationSaved.getId());

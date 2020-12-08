@@ -7,12 +7,9 @@ import com.thigorqueiroz.fry.domain.model.common.AggregateRootWithIdentifierAsUU
 import com.thigorqueiroz.fry.domain.model.duration.Duration;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.OffsetDateTime;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Table("campaign")
@@ -78,4 +75,5 @@ public class Campaign extends AggregateRootWithIdentifierAsUUID<Campaign> {
         this.id = durationId;
         return this;
     }
+
 }
