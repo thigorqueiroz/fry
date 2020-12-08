@@ -11,6 +11,7 @@ import com.thigorqueiroz.fry.domain.model.common.BusinessException;
 import com.thigorqueiroz.fry.domain.model.common.EntityNotFoundException;
 import com.thigorqueiroz.fry.domain.model.duration.Duration;
 import com.thigorqueiroz.fry.domain.model.duration.DurationRepository;
+import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -22,8 +23,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Log
 public class CampaignService {
-    private static final Logger log = LoggerFactory.getLogger(CampaignService.class);
 
     private final ApplicationEventPublisher eventPublisher;
     private final CampaignRepository campaignRepository;
@@ -37,14 +38,12 @@ public class CampaignService {
         this.eventPublisher = eventPublisher;
     }
 
-    //TODO: review if it is necessary
     public Campaign findById(UUID id) {
         return campaignRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Campaign"));
     }
 
     @Transactional
     public void delete(UUID id) {
-        //TODO: unhappy path
         campaignRepository.findById(id)
                 .ifPresent(campaignRepository::delete);
     }

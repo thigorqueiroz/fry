@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Data;
+import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,14 +29,18 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/campaigns")
 @Tag(name = "campaigns", description = "Campaign API")
+@Data
 public class CampaignResource {
-    private static final Logger Logger = LoggerFactory.getLogger(CampaignResource.class);
-    @Autowired
-    private CampaignService campaignService;
+    private static final Logger log = LoggerFactory.getLogger(CampaignResource.class);
+    private final CampaignService campaignService;
+
+    public CampaignResource(CampaignService campaignService) {
+        this.campaignService = campaignService;
+    }
 
     @GetMapping
     public List<Campaign> findAll() {
-        Logger.info("find all campaigns");
+        log.info("find all campaigns");
         return campaignService.findAll();
     }
 
@@ -49,7 +55,7 @@ public class CampaignResource {
                             array = @ArraySchema(
                                     schema = @Schema(implementation = Campaign.class))))})
     public List<Campaign> findAll(@PathVariable UUID teamId) {
-        Logger.info("find all campaigns");
+        log.info("find all campaigns");
         return campaignService.findAlldByTeam(teamId);
     }
 
