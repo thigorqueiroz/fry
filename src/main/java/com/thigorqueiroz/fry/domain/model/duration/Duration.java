@@ -27,10 +27,8 @@ public class Duration extends AggregateRootWithIdentifierAsUUID<Duration> {
     }
 
     public Duration plusDayInPeriodEnd(Long day){
-  //      var instant = this.periodEnd;
-    //    var localdatetime = LocalDateTime.from(instant).plusDays(1);
-//        this.periodEnd = Date.from(localdatetime.toInstant(ZoneOffset.UTC)); //make immutable
-        this.periodEnd.plusDays(1L);
+        this.periodEnd = this.periodEnd.plusDays(day);
+        this.updatedAt = OffsetDateTime.now();
         return this;
     }
 
