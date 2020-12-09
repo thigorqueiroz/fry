@@ -43,6 +43,9 @@ public class Campaign extends AggregateRootWithIdentifierAsUUID<Campaign> {
     public Campaign(String name, UUID durationId) {
         this.name = name;
         this.durationId = durationId;
+    }
 
+    public String getName() {
+        return name;
     }
 }

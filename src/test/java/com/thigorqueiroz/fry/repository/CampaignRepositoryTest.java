@@ -1,6 +1,7 @@
 package com.thigorqueiroz.fry.repository;
 
 import br.com.six2six.fixturefactory.Fixture;
+import com.thigorqueiroz.fry.application.command.CreateCampaignCommand;
 import com.thigorqueiroz.fry.application.service.CampaignService;
 import com.thigorqueiroz.fry.domain.model.campaign.Campaign;
 import com.thigorqueiroz.fry.domain.model.campaign.CampaignRepository;
@@ -19,15 +20,10 @@ class CampaignRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     void givenCampaign_ShouldInsertIt_ThenReturnPersistedCampaign() {
-    /*    var campaignFixture = (Campaign)Fixture.from(Campaign.class).gimme("default");
-        campaignService.create(campaignFixture);
-
+        var campaignFixture = (Campaign) Fixture.from(Campaign.class).gimme("default");
+        var campaignCommand = new CreateCampaignCommand(campaignFixture.getName(), "25/10/2020", "28/10/2021");
+        campaignService.create(campaignCommand);
         var campaign = campaignRepository.findByName(campaignFixture.getName());
-        assertThat(campaign).isNotEmpty();*/
-
-    }
-
-    void givenTeamId_ShouldFindByTeamId_ThenReturnAllCampaignsRelatedWithIt() {
-        //
+        assertThat(campaign).isNotEmpty();
     }
 }
