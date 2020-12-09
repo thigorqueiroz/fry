@@ -85,11 +85,6 @@ Into your IntelliJ IDEA, to run the project, you should optimally set a Configur
 #### /health
 	http localhost:8080/actuator/health
 
-### Database
-
-#### Index naming
-
-
 
 ## Built With
 
